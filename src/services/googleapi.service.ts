@@ -1,13 +1,26 @@
 import { gapi } from "gapi-script";
 
-export const createSpreadsheet = (
+export const getSpreadsheetValuesFromId = (spreadsheetId: string, range: string) => {
+  const values = gapi.client.sheets.spreadsheets.values
+    .get({
+      spreadsheetId: spreadsheetId,
+      range: range,
+    })
+    .then(function (response) {
+      const values = response.result.values;
+      console.log(values);
+    });
+    return values;
+};
+
+export const createSpreadsheet = async (
   title: string,
   sheetTitle: string,
   numColumns: number,
   numRows: number,
   callback?: any
 ) => {
-  gapi.client.sheets.spreadsheets
+  return gapi.client.sheets.spreadsheets
     .create({
       resource: {
         properties: {
@@ -89,13 +102,13 @@ export const updateValueFromSheet = (
   data: string,
   spreadsheetId: string
 ) => {
-  var params = {
+  const params = {
     spreadsheetId,
     range: `${row}${column}`,
     valueInputOption: "USER_ENTERED",
   };
 
-  var valueRangeBody = {
+  const valueRangeBody = {
     range: `${row}${column}`,
     majorDimension: "ROWS",
     values: [[data]],
