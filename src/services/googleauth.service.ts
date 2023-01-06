@@ -1,3 +1,4 @@
+import { gapi } from "gapi-script";
 import credentials from "../env/credentials.json";
 
 const CLIENT_ID = credentials.CLIENT_ID;
@@ -5,8 +6,9 @@ const API_KEY = credentials.API_KEY;
 const SCOPE = credentials.SPREADSHEET_SCOPE;
 const CLIENT_SECRET = credentials.CLIENT_SECRET;
 const REDIRECT_URL = credentials.REDIRECT_URL;
-const SPREAD_SHEETS_URL = "https://sheets.googleapis.com/$discovery/rest?version=v4";
-const API_NAME = "client:auth2"
+const SPREAD_SHEETS_URL =
+  "https://sheets.googleapis.com/$discovery/rest?version=v4";
+const API_NAME = "client:auth2";
 
 let tokenClient: any;
 let access_token: any;
@@ -39,18 +41,18 @@ export function startGapiClient() {
     })
     .then(
       () => {
-        console.log("loaded!");
-        const token = gapi.auth2
-          .getAuthInstance()
-          .currentUser.get()
-          .getAuthResponse();
-        console.log(token);
+        console.log("gapi loaded!");
+        // const token = gapi.auth2
+        //   .getAuthInstance()
+        //   .currentUser.get()
+        //   .getAuthResponse();
       },
       (err) => {
         console.log("Error: " + err.result.error.message);
       }
     );
 }
-export function loadGapiClient(callback: any) {
+
+export async function loadGapiClient(callback: any) {
   gapi.load(API_NAME, callback);
 }

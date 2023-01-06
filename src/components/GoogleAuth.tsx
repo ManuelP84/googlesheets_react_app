@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { getGoogleToken, getGoogleClient } from "../services/googleauth.service";
+import {
+  getGoogleToken,
+  getGoogleClient,
+  loadGapiClient,
+  startGapiClient,
+} from "../services/googleauth.service";
 
 interface IGoogleAuthProps {}
 
@@ -8,7 +13,13 @@ export const GoogleAuth: React.FunctionComponent<IGoogleAuthProps> = (
   props
 ) => {
   useEffect(() => {
-    getGoogleClient();
+    getGoogleClient()
+      .then(() => {
+        loadGapiClient(startGapiClient);
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
   });
 
   return (
