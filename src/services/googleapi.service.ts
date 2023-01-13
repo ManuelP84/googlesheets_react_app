@@ -129,3 +129,30 @@ export const updateValueFromSheet = (
       return;
     });
 };
+
+export const getSpreadsheetsFromAccount = async (id: string) => {
+  gapi.client.drive.files
+    .list({
+      q: "mimeType='application/vnd.google-apps.spreadsheet'",
+    })
+    .then((response) => {
+      console.log(response.result.files);
+      const isIdInDrive = response.result.files?.filter(id => id)
+      if(!!isIdInDrive){
+        console.log("Spreadsheet in account");        
+        window.open(`https://docs.google.com/spreadsheets/d/${id}`, "_blank");
+      }      
+    });
+};
+
+export const getSheetsFromSpreadsheet = (spreadsheetId: string) => {
+  const sheets = gapi.client.sheets.spreadsheets
+    .get({
+      spreadsheetId: spreadsheetId,
+    })
+    .then(function (response) {
+      const sheets = response.result.sheets;
+      console.log(sheets);
+    });
+    return sheets;
+};

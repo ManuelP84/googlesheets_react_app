@@ -3,7 +3,7 @@ import credentials from "../env/credentials.json";
 
 const CLIENT_ID = credentials.CLIENT_ID;
 const API_KEY = credentials.API_KEY;
-const SCOPE = credentials.SPREADSHEET_SCOPE;
+const SCOPE = credentials.SCOPES;
 const CLIENT_SECRET = credentials.CLIENT_SECRET;
 const REDIRECT_URL = credentials.REDIRECT_URL;
 const SPREAD_SHEETS_URL =
@@ -38,6 +38,9 @@ export function startGapiClient() {
     })
     .then(function () {
       gapi.client.load(SPREAD_SHEETS_URL);
+    })
+    .then(function () {
+      gapi.client.load("drive", "v3");
     })
     .then(
       () => {

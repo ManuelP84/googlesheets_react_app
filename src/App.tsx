@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { GoogleAuth } from "./components/GoogleAuth"
-import { createSpreadsheet, getSpreadsheetValuesFromId, insertRowsToSheet, updateValueFromSheet } from "./services/googleapi.service"
+import { createSpreadsheet, getSheetsFromSpreadsheet, getSpreadsheetsFromAccount, getSpreadsheetValuesFromId, insertRowsToSheet, updateValueFromSheet } from "./services/googleapi.service"
 
 function App() {
   const [id, setId] = useState<string | null>(null);
@@ -19,7 +19,7 @@ function App() {
   }
 
   const getValuesFromSheet = () => {
-    const range = "A1:E"
+    const range = "A1:1"
     console.log(id);
     
     if(!!id){
@@ -37,6 +37,18 @@ function App() {
     }
   }
 
+  const getSpreadsheet = () => {
+    if(!!id){
+      getSpreadsheetsFromAccount(id);
+    }
+  }
+
+  const getSheets = () => {
+    if(!!id){
+      getSheetsFromSpreadsheet(id);
+    }
+  }
+
   return (
     <>
     <GoogleAuth/>
@@ -44,6 +56,8 @@ function App() {
     <button onClick={insertRow}>Append Data</button>
     <button onClick={getValuesFromSheet}>Get Data</button>
     <button onClick={updateValue}>Update Data</button>
+    <button onClick={getSpreadsheet}>Get Spreadsheet</button>
+    <button onClick={getSheets}>Get Sheets</button>
     </>
   )
 }
