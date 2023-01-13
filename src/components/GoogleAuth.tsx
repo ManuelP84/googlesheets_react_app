@@ -1,3 +1,4 @@
+import { Button, Form } from "antd";
 import * as React from "react";
 import { useEffect } from "react";
 import {
@@ -24,7 +25,13 @@ export const GoogleAuth: React.FunctionComponent<IGoogleAuthProps> = (
 
   return (
     <>
-      <button onClick={getGoogleToken}>Login</button>
+      <Form>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" onClick={getGoogleToken}>
+            Login with Google
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };
